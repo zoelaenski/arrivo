@@ -26,7 +26,7 @@ export default async function DashboardPage() {
           </div>
           <div className="flex items-center gap-3">
             <Link
-              href="/dashboard/new"
+              href="/dashboard/new" prefetch={false}
               className="bg-slate-900 text-white text-sm font-medium rounded-lg px-4 py-2 hover:bg-slate-800 transition"
             >
               New invoice
@@ -53,7 +53,7 @@ export default async function DashboardPage() {
           {invoices?.map((invoice) => (
             <Link
               key={invoice.id}
-              href={`/dashboard/${invoice.id}`}
+              href={`/dashboard/${invoice.id}`} prefetch={false}
               className="block bg-white rounded-xl border border-slate-200 p-4 hover:border-slate-300 transition"
             >
               <div className="flex items-center justify-between">
