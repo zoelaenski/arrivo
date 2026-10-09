@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase-server';
 import PaymentQRCode from './payment-qr';
 import PaymentStatusPoller from './payment-status-poller';
+import CopyLinkButton from './copy-link-button';
 
 export default async function InvoiceDetailPage({
   params,
@@ -47,6 +48,7 @@ export default async function InvoiceDetailPage({
             </span>
           </div>
 
+          <CopyLinkButton invoiceId={invoice.id} />
           {invoice.status === 'paid' ? (
             <div className="text-center py-8">
               <p className="text-emerald-600 font-medium">✓ Paid</p>
