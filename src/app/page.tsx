@@ -86,8 +86,21 @@ export default async function Home() {
     <div className="bg-white text-[#1F2328] min-h-screen">
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-[#E6E6E3]">
         <div className="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
-          <span className="text-lg font-bold tracking-tight">
-            Solana Invoicer
+                    <span className="flex items-center gap-2.5 text-lg font-bold tracking-tight">
+            <svg viewBox="0 0 1024 1024" className="h-8 w-8" aria-hidden="true">
+              <rect width="1024" height="1024" rx="224" fill="#F2A33A" />
+              <g
+                transform="translate(512 512) scale(1.25) translate(-460 -530)"
+                fill="none"
+                stroke="#1F2328"
+                strokeWidth="80"
+                strokeLinecap="round"
+              >
+                <circle cx="460" cy="560" r="170" />
+                <path d="M 630 330 L 630 730" strokeWidth="82" />
+              </g>
+            </svg>
+            Arrivo
           </span>
                    {user ? (
             <Link
@@ -289,7 +302,7 @@ export default async function Home() {
 
       <footer className="border-t border-[#E6E6E3]">
         <div className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between">
-          <span className="text-sm text-[#5F6670]">Solana Invoicer</span>
+          <span className="text-sm text-[#5F6670]">ARRIVO</span>
           <div className="flex items-center gap-5">
             {socials.map((s) => (
               <a

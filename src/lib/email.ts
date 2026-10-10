@@ -13,7 +13,7 @@ export async function sendPaymentNotification({
 }) {
   try {
     await resend.emails.send({
-      from: 'Solana Invoicer <onboarding@resend.dev>',
+      from: 'Arrivo <onboarding@resend.dev>',
       to: toEmail,
       subject: `You've been paid $${amountUsdc} USDC`,
       html: `
