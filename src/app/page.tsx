@@ -89,7 +89,7 @@ export default async function Home() {
           <span className="text-lg font-bold tracking-tight">
             Solana Invoicer
           </span>
-          {user && (
+                   {user ? (
             <Link
               href="/dashboard"
               prefetch={false}
@@ -97,6 +97,21 @@ export default async function Home() {
             >
               Open dashboard
             </Link>
+          ) : (
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Link
+                href="/login"
+                className={`rounded-full px-4 py-2 text-sm font-medium hover:bg-[#F4F4F2] transition ${focus}`}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/login?mode=signup"
+                className={`rounded-full bg-[#F2A33A] text-[#1F2328] px-4 py-2 text-sm font-semibold hover:bg-[#E8962A] transition ${focus}`}
+              >
+                Get started
+              </Link>
+            </div>
           )}
         </div>
       </header>
