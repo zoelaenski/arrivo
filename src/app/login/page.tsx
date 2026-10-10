@@ -10,10 +10,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [checkEmail, setCheckEmail] = useState(false);
 
   const router = useRouter();
   const supabase = createClient();
-  
+
   useEffect(() => {
     if (new URLSearchParams(window.location.search).get('mode') === 'signup') {
       setMode('signup');
@@ -25,20 +26,54 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    const { error } =
+    const result =
       mode === 'login'
         ? await supabase.auth.signInWithPassword({ email, password })
         : await supabase.auth.signUp({ email, password });
 
     setLoading(false);
 
-    if (error) {
-      setError(error.message);
+    if (result.error) {
+      setError(result.error.message);
+      return;
+    }
+
+    // When email confirmation is on, sign-up returns no session until
+    // the person clicks the link in their inbox.
+    if (mode === 'signup' && !result.data.session) {
+      setCheckEmail(true);
       return;
     }
 
     router.push('/dashboard');
     router.refresh();
+  }
+
+  if (checkEmail) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
+        <div className="w-full max-w-sm bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
+          <h1 className="text-xl font-semibold text-slate-900 mb-2">
+            Check your email
+          </h1>
+          <p className="text-sm text-slate-500 mb-6">
+            We sent a confirmation link to{' '}
+            <span className="font-medium text-slate-900">{email}</span>. Open it
+            to activate your account, then come back and log in.
+          </p>
+          <button
+            onClick={() => {
+              setCheckEmail(false);
+              setMode('login');
+              setPassword('');
+            }}
+            className="w-full bg-slate-900 text-white rounded-lg py-2 text-sm font-medium hover:bg-slate-800 transition"
+          >
+            Back to log in
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
