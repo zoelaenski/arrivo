@@ -15,7 +15,7 @@ const steps = [
   },
   {
     title: 'Get confirmed automatically',
-    body: 'We watch your wallet on-chain, mark the invoice paid when the transfer lands, and email you.',
+    body: 'We watch your wallet on-chain and mark the invoice paid when the transfer lands.',
   },
 ];
 
@@ -25,8 +25,8 @@ const features = [
     body: 'No refreshing a block explorer. The invoice flips to paid once the transaction confirms.',
   },
   {
-    title: 'Email when you get paid',
-    body: 'A confirmation lands in your inbox as soon as the payment is matched to your invoice.',
+    title: 'Every invoice at a glance',
+    body: 'See which invoices are pending and which are paid, all from one simple dashboard.',
   },
   {
     title: 'Client links, no sign-up',
@@ -138,7 +138,7 @@ export default async function Home() {
           </h1>
           <p className="mt-6 text-lg text-[#5F6670] max-w-md leading-relaxed">
             Share a payment link with your client. We confirm the payment on
-            Solana and email you the moment it lands.
+            Solana and mark your invoice paid the moment it lands.
           </p>
           <div className="mt-9">
             {user ? (
@@ -198,7 +198,7 @@ export default async function Home() {
                   'Payment link sent',
                   'Client paid from their wallet',
                   'Confirmed on Solana',
-                  'Email sent to you',
+                  'Invoice marked as paid',
                 ].map((item) => (
                   <li key={item} className="flex items-center justify-between">
                     <span className="text-[#5F6670]">{item}</span>
