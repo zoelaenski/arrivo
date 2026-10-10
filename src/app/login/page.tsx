@@ -1,8 +1,58 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase-client';
+
+const inputClass =
+  'w-full rounded-xl border border-[#D9D9D5] px-4 py-3 text-sm text-[#1F2328] placeholder:text-[#9AA0A6] focus:outline-none focus:ring-2 focus:ring-[#F2A33A] focus:border-[#F2A33A]';
+
+const buttonClass =
+  'w-full rounded-full bg-[#F2A33A] text-[#1F2328] py-3 text-sm font-semibold hover:bg-[#E8962A] disabled:opacity-50 transition';
+
+function Logo() {
+  return (
+    <Link
+      href="/"
+      className="inline-flex items-center gap-2.5 text-lg font-bold tracking-tight text-[#1F2328]"
+    >
+      <svg viewBox="0 0 1024 1024" className="h-8 w-8" aria-hidden="true">
+        <rect width="1024" height="1024" rx="224" fill="#F2A33A" />
+        <g
+          transform="translate(512 512) scale(1.25) translate(-460 -530)"
+          fill="none"
+          stroke="#1F2328"
+          strokeWidth="80"
+          strokeLinecap="round"
+        >
+          <circle cx="460" cy="560" r="170" />
+          <path d="M 630 330 L 630 730" strokeWidth="82" />
+        </g>
+      </svg>
+      Arrivo
+    </Link>
+  );
+}
+
+function Shell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen bg-[#F4F4F2] flex flex-col items-center justify-center px-4 py-10">
+      <div className="mb-8">
+        <Logo />
+      </div>
+      <div className="w-full max-w-sm rounded-3xl bg-white border border-[#E6E6E3] p-8 shadow-[0_18px_40px_-24px_rgba(31,35,40,0.35)]">
+        {children}
+      </div>
+      <Link
+        href="/"
+        className="mt-6 text-sm text-[#5F6670] hover:text-[#1F2328]"
+      >
+        ← Back to home
+      </Link>
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const [mode, setMode] = useState<'login' | 'signup'>('login');
@@ -51,15 +101,15 @@ export default function LoginPage() {
 
   if (checkEmail) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-        <div className="w-full max-w-sm bg-white rounded-xl shadow-sm border border-slate-200 p-8 text-center">
-          <h1 className="text-xl font-semibold text-slate-900 mb-2">
+      <Shell>
+        <div className="text-center">
+          <h1 className="text-2xl font-bold tracking-tight text-[#1F2328] mb-2">
             Check your email
           </h1>
-          <p className="text-sm text-slate-500 mb-6">
+          <p className="text-sm text-[#5F6670] leading-relaxed mb-6">
             We sent a confirmation link to{' '}
-            <span className="font-medium text-slate-900">{email}</span>. Open it
-            to activate your account, then come back and log in.
+            <span className="font-semibold text-[#1F2328]">{email}</span>. Open
+            it to activate your account, then come back and log in.
           </p>
           <button
             onClick={() => {
@@ -67,79 +117,75 @@ export default function LoginPage() {
               setMode('login');
               setPassword('');
             }}
-            className="w-full bg-slate-900 text-white rounded-lg py-2 text-sm font-medium hover:bg-slate-800 transition"
+            className={buttonClass}
           >
             Back to log in
           </button>
         </div>
-      </div>
+      </Shell>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-sm bg-white rounded-xl shadow-sm border border-slate-200 p-8">
-        <h1 className="text-xl font-semibold text-slate-900 mb-1">
-          {mode === 'login' ? 'Log in' : 'Create your account'}
-        </h1>
-        <p className="text-sm text-slate-500 mb-6">
-          Invoice clients and get paid in USDC on Solana.
-        </p>
+    <Shell>
+      <h1 className="text-2xl font-bold tracking-tight text-[#1F2328] mb-1">
+        {mode === 'login' ? 'Welcome back' : 'Create your account'}
+      </h1>
+      <p className="text-sm text-[#5F6670] mb-6">
+        {mode === 'login'
+          ? 'Log in to manage your invoices.'
+          : 'Start invoicing in USDC in a couple of minutes.'}
+      </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-              placeholder="you@example.com"
-            />
-          </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-[#1F2328] mb-1.5">
+            Email
+          </label>
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={inputClass}
+            placeholder="you@example.com"
+          />
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
-              Password
-            </label>
-            <input
-              type="password"
-              required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-900"
-              placeholder="••••••••"
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-[#1F2328] mb-1.5">
+            Password
+          </label>
+          <input
+            type="password"
+            required
+            minLength={6}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={inputClass}
+            placeholder="At least 6 characters"
+          />
+        </div>
 
-          {error && (
-            <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
-              {error}
-            </p>
-          )}
+        {error && (
+          <p className="text-sm text-[#B3261E] bg-[#FDECEC] rounded-xl px-4 py-3">
+            {error}
+          </p>
+        )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-slate-900 text-white rounded-lg py-2 text-sm font-medium hover:bg-slate-800 disabled:opacity-50 transition"
-          >
-            {loading ? 'Please wait…' : mode === 'login' ? 'Log in' : 'Sign up'}
-          </button>
-        </form>
-
-        <button
-          onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
-          className="mt-4 text-sm text-slate-500 hover:text-slate-700 w-full text-center"
-        >
-          {mode === 'login'
-            ? "Don't have an account? Sign up"
-            : 'Already have an account? Log in'}
+        <button type="submit" disabled={loading} className={buttonClass}>
+          {loading ? 'Please wait…' : mode === 'login' ? 'Log in' : 'Sign up'}
         </button>
-      </div>
-    </div>
+      </form>
+
+      <button
+        onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}
+        className="mt-5 text-sm text-[#5F6670] hover:text-[#1F2328] w-full text-center"
+      >
+        {mode === 'login'
+          ? "Don't have an account? Sign up"
+          : 'Already have an account? Log in'}
+      </button>
+    </Shell>
   );
 }
